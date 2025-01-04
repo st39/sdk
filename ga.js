@@ -15,6 +15,7 @@
     });
 })();
 
+/*
 var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
 if (url.indexOf("gamez6.com") != -1 || url.indexOf("friv5online.com") != -1 || url.indexOf("hoopgame.net") != -1 || url.indexOf("actiongameshub.com") != -1 
 	|| url.indexOf("gogy.com") != -1 || url.indexOf("mixfriv.com") != -1 
@@ -38,3 +39,4 @@ if (url.indexOf("gamez6.com") != -1 || url.indexOf("friv5online.com") != -1 || u
                     });
     }, 30000);
 }
+*/
