@@ -1,6 +1,7 @@
 [ 
 {"domain": "sites.google.com"},
 {"domain": "script.google.com"},
+{"domain": "*.googleusercontent.com"},
 {"domain": "googleusercontent.com"},
 {"domain": "googleapis.com"},
 {"domain": "gstatic.com"}
