@@ -1783,6 +1783,32 @@ var adxAds2 = false;
                                     urls = new RegExp(urls);
                                         if (url.match(urls) || window.location.search.indexOf("y8") > -1) {
                                             midrolltimer = 130000;
+											if (!window.__lastAdTime) window.__lastAdTime = Date.now();
+if (!window.__firstMidrollShown) {
+    window.__firstMidrollShown = true;
+    window.__lastMidrollTime = Date.now();
+    console.log("Allowing first midroll ad.");
+} else {
+    var now = Date.now();
+    var timeSinceLastMidroll = now - window.__lastMidrollTime;
+
+    if (timeSinceLastMidroll < 30000) {
+        console.log("Skipping midroll (too soon)");
+        e.onResumeGame("Midroll skipped", "success");
+        return;
+    }
+
+    window.__lastMidrollTime = now;
+}
+if ((window.location != window.parent.location ? document.referrer : document.location.href).includes("sites.google.com")) {
+    if (!window.__firstMidrollHandled) {
+        window.__firstMidrollHandled = true;
+        window.__lastMidrollTime = Date.now();
+        console.log("Blocking very first auto ad on Google Sites.");
+        e.onResumeGame("Blocked unwanted auto ad", "success");
+        return;
+    }
+}
                                             t.advertisements ? void 0 !== e.adRequestTimer ? (new Date).valueOf() - e.adRequestTimer.valueOf() < midrolltimer ? ((0, u.dankLog)("SDK_SHOW_BANNER", "The advertisement was requested too soon after the previous advertisement was finished.", "warning"), e.onResumeGame("Just resume the game...", "success")) : ((0, u.dankLog)("SDK_SHOW_BANNER", "Requested the midroll advertisement.", "success"), e.adRequestTimer = new Date, e.videoAdInstance.requestAttempts = 0, e.videoAdInstance.requestAd().then(function(t) {
                                                 return e.videoAdInstance.loadAd(t)
                                             }).catch(function(t) {
