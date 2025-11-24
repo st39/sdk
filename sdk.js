@@ -1272,27 +1272,43 @@ var adxAds2 = false;
                         })
                     }
                 }, {
-key: "_onAdError",
-value: function(e) {
+                    key: "_onAdError",
+                    value: function(e) {
+                        this.cancel(), this._clearSafetyTimer("AD_ERROR");
+                        try {
+                            if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.href.indexOf("account") != -1) {       
+                            }
+                            else {
+                                if(adxAds == true)  {
+                                    adxAds2 = true;
+                                    window.sdk.showBanner();
+                                }
+                                else  {
+                                     try {
+                                            var urls = '(y8.com|pog.com|gamepost.com';
+                                            $.getJSON('https://cdn.jsdelivr.net/gh/st39/sdk@main/dataxxx.json', function (data) {
+                                                $.each(data, function(i, item) {
+                                                      urls += '|' + item.domain;
+                                                });
+                                                var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
+                                                urls += ')';
+                                                urls = new RegExp(urls);
+                                                if (url.match(urls) || window.location.search.indexOf("y8") > -1) {
 
-    this._clearSafetyTimer("AD_ERROR");
-
-    try {
-        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.href.indexOf("account") != -1) {       
-
-        }
-        else {
-
-             try {
-                    promoVideo();
-            } catch (e) {
-                console.log(e);
-            }
-        }
-    } catch (e) {
-        console.log(e);
-    }
-}
+                                                }
+                                                else  {
+                                                    promoVideo();
+                                                }
+                                        });
+                                    } catch (e) {
+                                    }
+                                    // ShowAds2();
+                                }
+                            }
+                        } catch (e) {
+                            console.log(e)
+                        }
+                    }
                 }, {
                     key: "_startSafetyTimer",
                     value: function(e, t) {
@@ -1779,7 +1795,7 @@ value: function(e) {
                                         }
                                         else  {
                                             midrolltimer = 30000;
-                                            t.advertisements ? void 0 !== e.adRequestTimer ? (new Date).valueOf() - e.adRequestTimer.valueOf() < midrolltimer ? ((0, u.dankLog)("SDK_SHOW_BANNER", "The advertisement was requested too soon after the previous advertisement was finished.", "warning"), e.onResumeGame("Just resume the game...", "success")) : ((0, u.dankLog)("SDK_SHOW_BANNER", "Requested the midroll advertisement.", "success"), e.adRequestTimer = new Date, e.videoAdInstance.requestAttempts = 0, e.videoAdInstance.requestAd().then(function(t) {
+                                            t.advertisements ? void 0 !== e.adRequestTimer ? (new Date).valueOf() - e.adRequestTimer.valueOf() < midrolltimer ? ((0, u.dankLog)("SDK_SHOW_BANNER", "The advertisement was requested too soon after the previous advertisement was finished.", "warning"), e.onResumeGame("Just resume the game...", "success"), ShowAds()) : ((0, u.dankLog)("SDK_SHOW_BANNER", "Requested the midroll advertisement.", "success"), e.adRequestTimer = new Date, e.videoAdInstance.requestAttempts = 0, e.videoAdInstance.requestAd().then(function(t) {
                                                 return e.videoAdInstance.loadAd(t)
                                             }).catch(function(t) {
                                                 e.videoAdInstance.onError(t)
